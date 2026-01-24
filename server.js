@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const path = require('path'); // 1. Add this import
 const { Client } = require("@notionhq/client");
 const OpenAI = require("openai");
 
@@ -8,7 +9,14 @@ const notion = new Client({ auth: process.env.NOTION_API });
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 app.use(express.json());
-app.use(express.static('public'));
+
+// 2. Use path.join to ensure the 'public' folder is found correctly on Vercel
+app.use(express.static(path.join(__dirname, 'public')));
+
+// 3. Add an explicit route to serve index.html for the root path
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 // 1. OpenAI Task Suggestion Logic
 app.post('/suggest-tasks', async (req, res) => {
@@ -80,7 +88,7 @@ app.post('/add-to-notion', async (req, res) => {
     }
 });
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`🚀 lvcky Search Bar online at http://localhost:${PORT}`));
 
 module.exports = app;
