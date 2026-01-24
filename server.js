@@ -82,3 +82,5 @@ app.post('/add-to-notion', async (req, res) => {
 
 const PORT = 3000;
 app.listen(PORT, () => console.log(`🚀 lvcky Search Bar online at http://localhost:${PORT}`));
+
+module.exports = app;
