@@ -3,43 +3,69 @@
 <head>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Dark Mode & Black Aesthetic */
+        /* --- Softer Dark Mode Palette --- */
+        :root {
+            --bg-main: #191919;       /* Deep charcoal background */
+            --bg-container: #252525;  /* Slightly lighter for inputs/boxes */
+            --border-color: #333333;  /* Subtle borders */
+            --text-primary: #ffffff;  /* Main text color */
+            --text-secondary: #a0a0a0; /* Grayed out text/placeholders */
+            --accent-color: #2383e2;  /* The blue accent button/checks */
+        }
+
         body { 
-            background-color: #000000; 
-            color: #ffffff; 
+            background-color: var(--bg-main); 
+            color: var(--text-primary); 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; 
         }
         
+        /* The main results container */
         .notion-shadow { 
-            border: 1px solid #2f2f2f; 
+            border: 1px solid var(--border-color); 
             border-radius: 8px; 
-            background-color: #000000;
+            background-color: var(--bg-container);
+            /* Optional: Add a very subtle shadow back if desired */
+            /* box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 8px; */
         }
 
+        /* The main search input style */
         .google-style { 
-            background-color: #0f0f0f;
+            background-color: var(--bg-container);
             border-radius: 24px; 
-            border: 1px solid #333333; 
-            color: #ffffff;
-            box-shadow: 0 1px 6px rgba(0,0,0,0.5); 
+            border: 1px solid var(--border-color); 
+            color: var(--text-primary);
+            box-shadow: 0 1px 6px rgba(0,0,0,0.2); 
+        }
+        
+        /* Focus state for the main input */
+        .google-style:focus {
+             border-color: var(--accent-color);
         }
 
-        /* Adjusting placeholder color for dark mode */
+        /* Adjusting placeholder color */
         input::placeholder {
-            color: #666666;
+            color: var(--text-secondary);
         }
 
-        /* Customizing the date picker calendar icon for dark backgrounds */
+        /* Customizing the date picker icon for dark backgrounds */
         input[type="date"]::-webkit-calendar-picker-indicator {
-            filter: invert(1);
+            filter: invert(0.8); /* Inverts colors so the icon is whitish */
+            cursor: pointer;
+        }
+        
+        /* Helper class for inputs */
+        .dark-input {
+            background-color: var(--bg-container);
+            border-color: var(--border-color);
+            color: var(--text-primary);
         }
     </style>
 </head>
 <body class="p-4 flex flex-col items-center">
     <div class="w-full max-w-2xl relative">
         <input id="goalInput" type="text" placeholder="✨ Type a goal to engineer your life..." 
-               class="google-style w-full p-3 px-10 outline-none focus:border-[#2383e2] transition text-lg">
-        <span class="absolute left-3 top-4 text-gray-600">🔍</span>
+               class="google-style w-full p-3 px-10 outline-none transition text-lg">
+        <span class="absolute left-3 top-4 text-gray-500">🔍</span>
     </div>
 
     <div id="loading" class="hidden mt-4 text-sm text-gray-500 animate-pulse">Brainstorming building blocks...</div>
@@ -51,13 +77,13 @@
         <div class="flex flex-wrap gap-3 mb-6">
             <div class="flex flex-col">
                 <span class="text-[10px] text-gray-500 font-bold uppercase ml-1 mb-1">Priority</span>
-                <select id="priority" class="p-2 bg-[#1a1a1a] border border-[#333] rounded text-sm text-white outline-none">
+                <select id="priority" class="p-2 rounded text-sm outline-none dark-input border">
                     <option>🔥 High</option><option>⚡ Med</option><option>☕ Low</option>
                 </select>
             </div>
             <div class="flex flex-col">
                 <span class="text-[10px] text-gray-500 font-bold uppercase ml-1 mb-1">Target Date</span>
-                <input id="deadline" type="date" class="p-2 bg-[#1a1a1a] border border-[#333] rounded text-sm text-white outline-none">
+                <input id="deadline" type="date" class="p-2 rounded text-sm outline-none dark-input border">
             </div>
         </div>
         
@@ -86,10 +112,11 @@
             document.getElementById('loading').classList.add('hidden');
             document.getElementById('results').classList.remove('hidden');
             const list = document.getElementById('taskList');
+            // Updated hover state to be slightly lighter than the container background
             list.innerHTML = tasks.map(t => `
-                <div class="flex items-center gap-3 p-2 hover:bg-[#1a1a1a] rounded transition group">
-                    <input type="checkbox" checked value="${t}" class="w-4 h-4 rounded accent-[#2383e2] bg-black border-gray-600">
-                    <span class="text-sm text-gray-300">${t}</span>
+                <div class="flex items-center gap-3 p-2 hover:bg-[#333333] rounded transition group">
+                    <input type="checkbox" checked value="${t}" class="w-4 h-4 rounded accent-[#2383e2] bg-[#252525] border-gray-600">
+                    <span class="text-sm text-gray-300 group-hover:text-white transition">${t}</span>
                 </div>
             `).join('');
         }
