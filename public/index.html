@@ -3,35 +3,61 @@
 <head>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Notion-matching colors */
-        body { background-color: #ffffff; color: #37352f; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
-        .notion-shadow { box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px, rgba(15, 15, 15, 0.1) 0px 2px 4px; border-radius: 8px; }
-        .google-style { border-radius: 24px; border: 1px solid #e1e1e1; box-shadow: 0 1px 6px rgba(32,33,36,0.2); }
+        /* Dark Mode & Black Aesthetic */
+        body { 
+            background-color: #000000; 
+            color: #ffffff; 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; 
+        }
+        
+        .notion-shadow { 
+            border: 1px solid #2f2f2f; 
+            border-radius: 8px; 
+            background-color: #000000;
+        }
+
+        .google-style { 
+            background-color: #0f0f0f;
+            border-radius: 24px; 
+            border: 1px solid #333333; 
+            color: #ffffff;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.5); 
+        }
+
+        /* Adjusting placeholder color for dark mode */
+        input::placeholder {
+            color: #666666;
+        }
+
+        /* Customizing the date picker calendar icon for dark backgrounds */
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+        }
     </style>
 </head>
 <body class="p-4 flex flex-col items-center">
     <div class="w-full max-w-2xl relative">
         <input id="goalInput" type="text" placeholder="✨ Type a goal to engineer your life..." 
-               class="google-style w-full p-3 px-10 outline-none focus:shadow-lg transition text-lg">
-        <span class="absolute left-3 top-4 text-gray-400">🔍</span>
+               class="google-style w-full p-3 px-10 outline-none focus:border-[#2383e2] transition text-lg">
+        <span class="absolute left-3 top-4 text-gray-600">🔍</span>
     </div>
 
-    <div id="loading" class="hidden mt-4 text-sm text-gray-400 animate-pulse">Brainstorming building blocks...</div>
+    <div id="loading" class="hidden mt-4 text-sm text-gray-500 animate-pulse">Brainstorming building blocks...</div>
 
-    <div id="results" class="hidden mt-4 w-full max-w-2xl notion-shadow p-6 bg-black text-left">
+    <div id="results" class="hidden mt-4 w-full max-w-2xl notion-shadow p-6 text-left">
         <h3 class="font-semibold text-gray-500 text-xs uppercase tracking-widest mb-4">Suggested Action Plan</h3>
         <div id="taskList" class="space-y-3 mb-6"></div>
         
         <div class="flex flex-wrap gap-3 mb-6">
             <div class="flex flex-col">
-                <span class="text-[10px] text-gray-400 font-bold uppercase ml-1 mb-1">Priority</span>
-                <select id="priority" class="p-2 bg-gray-50 border border-gray-200 rounded text-sm outline-none">
+                <span class="text-[10px] text-gray-500 font-bold uppercase ml-1 mb-1">Priority</span>
+                <select id="priority" class="p-2 bg-[#1a1a1a] border border-[#333] rounded text-sm text-white outline-none">
                     <option>🔥 High</option><option>⚡ Med</option><option>☕ Low</option>
                 </select>
             </div>
             <div class="flex flex-col">
-                <span class="text-[10px] text-gray-400 font-bold uppercase ml-1 mb-1">Target Date</span>
-                <input id="deadline" type="date" class="p-2 bg-gray-50 border border-gray-200 rounded text-sm outline-none">
+                <span class="text-[10px] text-gray-500 font-bold uppercase ml-1 mb-1">Target Date</span>
+                <input id="deadline" type="date" class="p-2 bg-[#1a1a1a] border border-[#333] rounded text-sm text-white outline-none">
             </div>
         </div>
         
@@ -61,9 +87,9 @@
             document.getElementById('results').classList.remove('hidden');
             const list = document.getElementById('taskList');
             list.innerHTML = tasks.map(t => `
-                <div class="flex items-center gap-3 p-2 hover:bg-gray-50 rounded transition group">
-                    <input type="checkbox" checked value="${t}" class="w-4 h-4 rounded accent-[#2383e2]">
-                    <span class="text-sm text-gray-700">${t}</span>
+                <div class="flex items-center gap-3 p-2 hover:bg-[#1a1a1a] rounded transition group">
+                    <input type="checkbox" checked value="${t}" class="w-4 h-4 rounded accent-[#2383e2] bg-black border-gray-600">
+                    <span class="text-sm text-gray-300">${t}</span>
                 </div>
             `).join('');
         }
