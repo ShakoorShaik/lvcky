@@ -3,7 +3,6 @@
 <head>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* --- Softer Dark Mode Palette --- */
         :root {
             --bg-main: #191919;       /* Deep charcoal background */
             --bg-container: #252525;  /* Slightly lighter for inputs/boxes */
@@ -24,11 +23,8 @@
             border: 1px solid var(--border-color); 
             border-radius: 8px; 
             background-color: var(--bg-container);
-            /* Optional: Add a very subtle shadow back if desired */
-            /* box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 8px; */
         }
 
-        /* The main search input style */
         .google-style { 
             background-color: var(--bg-container);
             border-radius: 24px; 
@@ -37,23 +33,19 @@
             box-shadow: 0 1px 6px rgba(0,0,0,0.2); 
         }
         
-        /* Focus state for the main input */
         .google-style:focus {
              border-color: var(--accent-color);
         }
 
-        /* Adjusting placeholder color */
         input::placeholder {
             color: var(--text-secondary);
         }
 
-        /* Customizing the date picker icon for dark backgrounds */
         input[type="date"]::-webkit-calendar-picker-indicator {
-            filter: invert(0.8); /* Inverts colors so the icon is whitish */
+            filter: invert(0.8);
             cursor: pointer;
         }
         
-        /* Helper class for inputs */
         .dark-input {
             background-color: var(--bg-container);
             border-color: var(--border-color);
@@ -112,7 +104,6 @@
             document.getElementById('loading').classList.add('hidden');
             document.getElementById('results').classList.remove('hidden');
             const list = document.getElementById('taskList');
-            // Updated hover state to be slightly lighter than the container background
             list.innerHTML = tasks.map(t => `
                 <div class="flex items-center gap-3 p-2 hover:bg-[#333333] rounded transition group">
                     <input type="checkbox" checked value="${t}" class="w-4 h-4 rounded accent-[#2383e2] bg-[#252525] border-gray-600">

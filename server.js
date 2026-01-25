@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const path = require('path'); // 1. Add this import
+const path = require('path');
 const { Client } = require("@notionhq/client");
 const OpenAI = require("openai");
 
@@ -10,15 +10,12 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 app.use(express.json());
 
-// 2. Use path.join to ensure the 'public' folder is found correctly on Vercel
 app.use(express.static(path.join(__dirname, 'public')));
 
-// 3. Add an explicit route to serve index.html for the root path
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// 1. OpenAI Task Suggestion Logic
 app.post('/suggest-tasks', async (req, res) => {
     try {
         const { goal } = req.body;
@@ -35,16 +32,13 @@ app.post('/suggest-tasks', async (req, res) => {
                     content: `Break down this goal into building blocks: "${goal}"` 
                 }
             ],
-            // Forces the model to output a valid JSON object/array
             response_format: { type: "json_object" } 
         });
 
         let content = completion.choices[0].message.content;
         
-        // CLEANING ENGINE: Removes markdown backticks if the AI includes them
         const cleanJson = content.replace(/```json|```/g, "").trim();
         
-        // Extract the array (Handling the case where AI might wrap it in a key)
         const parsedData = JSON.parse(cleanJson);
         const tasks = Array.isArray(parsedData) ? parsedData : Object.values(parsedData)[0];
         
@@ -55,12 +49,10 @@ app.post('/suggest-tasks', async (req, res) => {
     }
 });
 
-// 2. Notion Integration Logic
 app.post('/add-to-notion', async (req, res) => {
     const { goal, tasks, priority, deadline } = req.body;
 
     try {
-        // Create the Goal Page
         const goalPage = await notion.pages.create({
             parent: { database_id: process.env.GOALS_DB_ID },
             properties: {
@@ -69,7 +61,6 @@ app.post('/add-to-notion', async (req, res) => {
             }
         });
 
-        // Create the Action Tasks
         for (const taskName of tasks) {
             await notion.pages.create({
                 parent: { database_id: process.env.TASKS_DB_ID },

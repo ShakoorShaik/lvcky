@@ -18,7 +18,6 @@ async function init() {
 
         const today = new Date().toISOString().split('T')[0];
 
-        // Seed Task
         await helper.notion.pages.create({
             parent: { database_id: tasksDbId },
             properties: {
@@ -28,7 +27,6 @@ async function init() {
             }
         });
 
-        // Seed Monthly Review
         await helper.notion.pages.create({
             parent: { database_id: reviewDbId },
             properties: {

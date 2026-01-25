@@ -57,7 +57,6 @@ class NotionHelper {
             }
         });
 
-        // 4. Monthly Review Archive (Reflection Engine)
         const reviewDb = await this.notion.databases.create({
             parent: { type: "page_id", page_id: this.parentPageId },
             title: [{ type: "text", text: { content: "📔 Monthly Life Reviews" } }],
