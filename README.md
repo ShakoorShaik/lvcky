@@ -1,4 +1,4 @@
-## Lvcky
+# Lvcky
 
 lvcky Life OS is a centralized productivity ecosystem designed to "engineer" a user’s life
 
@@ -7,7 +7,7 @@ through a structured, relational framework. It serves as a command center for lo
 setting, granular task management, and consistent personal reflection.
 
 
-# Problem(s) Solved:
+## Problem(s) Solved:
 
 ● Goal Breakdown Paralysis: Users often struggle to decompose broad ambitions into
 
@@ -35,7 +35,7 @@ scoring systems to ensure long-term accountability.
 
 
 
-# Integrations and Their Functions
+## Integrations and Their Functions
 
 ● Notion API (Core Database)
 
