@@ -7,6 +7,9 @@ through a structured, relational framework. It serves as a command center for lo
 setting, granular task management, and consistent personal reflection.
 
 
+![Image](https://github.com/user-attachments/assets/c7512cbe-378d-4ffe-b432-754a3a97879a)
+
+
 ## Problem(s) Solved:
 
 ● Goal Breakdown Paralysis: Users often struggle to decompose broad ambitions into
